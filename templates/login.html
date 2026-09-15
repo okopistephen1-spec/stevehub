@@ -4,6 +4,15 @@
         <title>Login</title>
     </head>
     <body>
+        <nav>
+            <a href="/">Home</a>
+        </nav>
+
+        {% with messages = get_flashed_messages() %}
+            {% for message in messages %}
+                 <p>{{ message }}</p>
+            {% endfor %}
+        {% endwith %}
         <h1>Login</h1>
 
         <form method="POST" action="/login">
@@ -18,6 +27,10 @@
             <br><br>
 
             <button type="submit">Login</button>
+
+            <a href="/login/google">
+                <button type="button">Continue with google</button>
+            
         </form>
     </body>
 </html>
