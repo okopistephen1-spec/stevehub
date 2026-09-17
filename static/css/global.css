@@ -1,0 +1,17 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background:
+        radial-gradient(
+            circle at center,
+            #1e3a8a,
+            #111c2e 60%
+        );
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
