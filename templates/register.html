@@ -1,26 +1,75 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>Register</title>
-    </head>
-    <body>
-        <h1>Create an Account</h1>
+<html lang="en">
 
-        <form method="POST" action="/register">
-            <label>Username:</label>
-            <input type="username" name="username">
+<head>
 
-            <label>Email:</label>
-            <input type="email" name="email">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-            <label>Password:</label>
-            <input type="password" name="password">
+    <title>Create Account</title>
 
-            <label>Confirm Password:</label>
-            <input type="password" name="confirm_password">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/global.css') }}">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/register.css') }}">
+
+</head>
+
+<body>
+
+    <nav class="navbar">
+
+        <div class="logo">
+            SteveHub
+        </div>
+
+        <div class="nav-links">
+            <a href="/login">Login</a>
+        </div>
+
+    </nav>
 
 
-            <button type="submit">Register</button>
-        </form>
-    </body>
+    <main class="register-page">
+
+        <div class="register-container">
+
+            <h1>Create an Account</h1>
+
+            <p class="register-subtitle">
+                Create your SteveHub account
+            </p>
+
+            <form method="POST" action="/register">
+
+                <label>Username:</label>
+                <input type="text" name="username" required>
+
+                <label>Email:</label>
+                <input type="email" name="email" required>
+
+                <label>Password:</label>
+                <input type="password" name="password" required>
+
+                <label>Confirm Password:</label>
+                <input type="password" name="confirm_password" required>
+
+                <button type="submit">
+                    REGISTER
+                </button>
+
+            </form>
+
+            <p class="login-link">
+                Already have an account?
+                <a href="/login">Login</a>
+            </p>
+
+        </div>
+
+    </main>
+
+</body>
+
 </html>

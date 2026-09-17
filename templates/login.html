@@ -1,35 +1,49 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
         <title>Login</title>
+        
+        <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/global.css') }}">
+
+        <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/login.css') }}">
+        
     </head>
     <body>
-        <nav>
-            <a href="/">Home</a>
-        </nav>
+        <div class="login-container">
 
-        {% with messages = get_flashed_messages() %}
-            {% for message in messages %}
-                 <p>{{ message }}</p>
-            {% endfor %}
-        {% endwith %}
-        <h1>Login</h1>
+    <h1>Login</h1>
 
-        <form method="POST" action="/login">
-            <label>Email:</label>
-            <input type="email" name="email">
+    {% with messages = get_flashed_messages() %}
+        {% for message in messages %}
+            <p class="flash">{{ message }}</p>
+        {% endfor %}
+    {% endwith %}
 
-            <br><br>
+    <form method="POST">
 
-            <label>Password:</label>
-            <input type="password" name="password">
+        <label>Email</label>
+        <input type="email" name="email" required>
 
-            <br><br>
+        <label>Password</label>
+        <input type="password" name="password" required>
 
-            <button type="submit">Login</button>
+        <button type="submit">LOGIN</button>
 
-            <a href="/login/google">
-                <button type="button">Continue with google</button>
+        <br><br>
+
+        <a href="/login/google">Continue with Google</a>
+
+    </form>
+
+    <a href="/register">Don't have an account? Create one</a>
+
+</div>
+            
             
         </form>
     </body>

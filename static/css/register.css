@@ -1,0 +1,137 @@
+.register-page {
+    min-height: calc(100vh - 70px);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 40px 20px;
+}
+
+
+.register-container {
+    width: 420px;
+    max-width: 100%;
+
+    padding: 40px;
+
+    background: rgba(255, 255, 255, 0.08);
+
+    border: 1px solid rgba(255, 255, 255, 0.15);
+
+    border-radius: 20px;
+
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+
+    backdrop-filter: blur(12px);
+}
+
+
+.register-container h1 {
+    margin: 0;
+
+    text-align: center;
+
+    font-size: 32px;
+}
+
+
+.register-subtitle {
+    text-align: center;
+
+    color: #b8c0cc;
+
+    margin: 10px 0 30px;
+}
+
+
+.register-container label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-size: 14px;
+}
+
+
+.register-container input {
+    width: 100%;
+
+    padding: 13px 15px;
+
+    margin-bottom: 20px;
+
+    border: 1px solid rgba(255, 255, 255, 0.2);
+
+    border-radius: 8px;
+
+    background: rgba(255, 255, 255, 0.08);
+
+    color: white;
+
+    outline: none;
+
+    font-size: 15px;
+}
+
+
+.register-container input:focus {
+    border-color: #ffffff;
+
+    background: rgba(255, 255, 255, 0.12);
+}
+
+
+.register-container button {
+    width: 100%;
+
+    padding: 14px;
+
+    margin-top: 5px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: white;
+
+    color: #111c2e;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+
+    transition: 0.3s;
+}
+
+
+.register-container button:hover {
+    transform: translateY(-3px);
+
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
+}
+
+
+.login-link {
+    text-align: center;
+
+    margin-top: 25px;
+
+    color: #b8c0cc;
+}
+
+
+.login-link a {
+    color: white;
+
+    font-weight: bold;
+}
+
+
+.login-link a:hover {
+    text-decoration: underline;
+}

@@ -1,7 +1,10 @@
 import os
+import uuid
 
 GOOGLE_CLIENT_ID = os.environ.get("GOOGLE_CLIENT_ID")
 GOOGLE_CLIENT_SECRET = os.environ.get("GOOGLE_CLIENT_SECRET")
+
+from werkzeug.utils import secure_filename
 
 from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
@@ -10,7 +13,14 @@ from authlib.integrations.flask_client import OAuth
 
 app = Flask(__name__)
 
-app.secret_key = "dev-secret-key"
+UPLOAD_FOLDER = os.path.join(app.root_path, "static", "uploads")
+
+ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "webp"}
+
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
+
+
+app.secret_key = os.environ.get("SECRET_KEY")
 
 oauth = OAuth(app)
 
@@ -24,10 +34,30 @@ google = oauth.register(
     }
 )
 
+def allowed_file(filename):
+    return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
+
 def get_db_connection():
     conn = sqlite3.connect("database.db")
     conn.row_factory = sqlite3.Row
     return conn
+
+def add_profile_picture_column():
+    conn = get_db_connection()
+
+    columns = conn.execute("PRAGMA table_info(users)").fetchall()
+
+    column_names = [column["name"] for column in columns]
+
+    if "profile_picture" not in column_names:
+        conn.execute(
+            "ALTER TABLE users ADD COLUMN profile_picture TEXT"
+        )
+        conn.commit()
+
+    conn.close()
+
+add_profile_picture_column()
 
 def init_db():
     conn = get_db_connection()
@@ -138,6 +168,8 @@ def dashboard():
 
     return render_template("dashboard.html", user=user)
 
+
+
 @app.route("/profile", methods=["GET", "POST"])
 def profile():
     if "user_id" not in session:
@@ -145,6 +177,7 @@ def profile():
 
     if request.method == "POST":
         username = request.form["username"]
+        profile_picture = request.files.get("profile_picture")
 
         conn = get_db_connection()
 
@@ -152,6 +185,26 @@ def profile():
             "UPDATE users SET username = ? WHERE id = ?",
             (username, session["user_id"])
         )
+
+        if profile_picture and profile_picture.filename:
+            if allowed_file(profile_picture.filename):
+                filename = secure_filename(profile_picture.filename)
+
+                extension = filename.rsplit(".", 1)[1].lower()
+                filename = f"{uuid.uuid4().hex}.{extension}"
+
+                profile_picture.save(
+                    os.path.join(app.config["UPLOAD_FOLDER"], filename)
+                )
+
+                conn.execute(
+                    "UPDATE users SET profile_picture = ? WHERE id = ?",
+                    (filename, session["user_id"])
+                )
+
+                flash("Profile updated successfully.")
+            else:
+                flash("Only PNG, JPG, JPEG, and WEBP images are allowed.")
 
         conn.commit()
         conn.close()
@@ -230,7 +283,7 @@ def google_callback():
 
         user = conn.execute(
             "SELECT * FROM users WHERE email = ?",
-            (email)
+            (email,)
         ).fetchone()
     
     conn.close()
@@ -247,4 +300,4 @@ def logout():
     return redirect("/login")
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=8080)

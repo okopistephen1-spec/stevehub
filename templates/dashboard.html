@@ -1,27 +1,192 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>DASHBOARD</title>
-    </head>
-    <body>
+<html lang="en">
 
-        <nav>
-            <a href="/dashboard">Dashboard</a>
+<head>
 
-            <a href="/profile">Profile</a>
-        
-            <a href="/logout">Logout</a>
-        </nav>
-        
-        <h1>
-            Welcome {{ user["username"] }}!
-        </h1>
-        <p>Acess all your saved projects here, <br>
-            and trace your progression with our Hub.
-        </p>
-        <a href="/profile">My Profile</a>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <br><br>
-        
-    </body>
+    <title>SteveHub Dashboard</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/global.css') }}">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/dashboard.css') }}">
+
+</head>
+
+<body>
+
+    <div class="dashboard">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+
+            <div class="logo">
+                SteveHub
+            </div>
+
+            <nav class="sidebar-nav">
+
+                <a href="/dashboard" class="active">
+                    Dashboard
+                </a>
+
+                <a href="/profile">
+                    Profile
+                </a>
+
+                <a href="#">
+                    Projects
+                </a>
+
+                <a href="#">
+                    Progress
+                </a>
+
+            </nav>
+
+            <div class="sidebar-bottom">
+
+                <a href="/logout">
+                    Logout
+                </a>
+
+            </div>
+
+        </aside>
+
+
+        <!-- Main Content -->
+        <main class="dashboard-content">
+
+            <!-- Header -->
+            <header class="dashboard-header">
+
+                <div>
+                    <p class="welcome-text">
+                        Welcome back,
+                    </p>
+
+                    <h1>
+                        {{ user["username"] }}
+                    </h1>
+
+                    <p class="dashboard-description">
+                        Access all your saved projects here and
+                        track your progress with SteveHub.
+                    </p>
+                </div>
+
+                <a href="/profile" class="profile-button">
+                    My Profile
+                </a>
+                {% if user["profile_picture"] %}
+                <img
+                    src="{{ url_for('static', filename='uploads/' + user['profile_picture']) }}"
+                    alt="Profile Picture"
+                    class="dashboard-avatar"
+                    
+                >
+                    {% else %}
+                <div class="dashboard-avatar dashboard-placeholder">
+                {{ user["username"][0] }}
+                </div>
+                {% endif %}
+
+            </header>
+
+
+            <!-- Statistics -->
+            <section class="stats">
+
+                <div class="stat-card">
+
+                    <p>PROJECTS</p>
+
+                    <h2>0</h2>
+
+                    <span>Your saved projects</span>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <p>PROGRESS</p>
+
+                    <h2>0%</h2>
+
+                    <span>Overall progress</span>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <p>COMPLETED</p>
+
+                    <h2>0</h2>
+
+                    <span>Completed projects</span>
+
+                </div>
+
+            </section>
+
+
+            <!-- Main Dashboard Sections -->
+            <section class="dashboard-grid">
+
+                <div class="dashboard-card">
+
+                    <div class="card-header">
+
+                        <h2>Current Progress</h2>
+
+                        <span>0%</span>
+
+                    </div>
+
+                    <div class="progress-bar">
+
+                        <div class="progress"></div>
+
+                    </div>
+
+                    <p>
+                        Continue working on your projects
+                        and track your progress here.
+                    </p>
+
+                    <a href="#" class="card-button">
+                        View Progress
+                    </a>
+
+                </div>
+
+
+                <div class="dashboard-card">
+
+                    <h2>Recent Projects</h2>
+
+                    <p class="empty-text">
+                        You don't have any saved projects yet.
+                    </p>
+
+                    <a href="#" class="card-button">
+                        Create Project
+                    </a>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+</body>
+
 </html>

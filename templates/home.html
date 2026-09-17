@@ -1,14 +1,71 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>My New Website</title>
-        <a href="/register">Create Account</a>
-        <a href="/login">Login</a>
-        
-        
+
+        <link rel="stylesheet"
+              href="{{ url_for('static', filename='css/global.css') }}">
+
+        <link rel="stylesheet"
+              href="{{ url_for('static', filename='css/home.css') }}">
     </head>
+
     <body>
-        <h1>Welcome to my web app</h1>
-        <p>This website was built in leef center with, html, css and python</p>
+
+        <nav class="navbar">
+            <div class="logo">Stevehub</div>
+
+            <div class="nav-links">
+                <a href="/login">Login</a>
+                <a href="/register" class="nav-button">GET STARTED</a>
+                
+            </div>
+            
+        </nav>
+
+       <main class="hero">
+
+    <div class="hero-content">
+
+        <p>Welcome to Stevehub</p>
+
+        <h1>
+            Your Determination.
+            <span>Your Success.</span>
+        </h1>
+
+        <p class="hero-text">
+            This website was built for the comfort and trust of the users,
+            where you can track your progress rate.
+        </p>
+
+        <img
+            class="hero-image"
+            src="https://thumbs.dreamstime.com/b/business-professional-engaging-artificial-intelligence-concepts-modern-workplace-technology-innovation-elements-458243882.jpg"
+            alt="SteveHub technology"
+        >
+
+    </div>
+
+    <div class="hero-buttons">
+
+        <a href="/register" class="primary-button">
+            GET STARTED
+        </a>
+
+        <a href="/login" class="secondary-button">
+            SIGN IN
+        </a>
+
+    </div>
+
+</main>
+        
+
+        
+        
     </body>
 </html>
+

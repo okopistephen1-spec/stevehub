@@ -1,53 +1,220 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>Profile</title>
-    </head>
-    <body>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Profile - SteveHub</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/global.css') }}">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/profile.css') }}">
+
+</head>
+
+<body>
+
+    <div class="profile-page">
+
+        <!-- Top Navigation -->
+        <nav class="profile-nav">
+
+            <div class="profile-logo">
+                SteveHub
+            </div>
+
+            <div class="profile-nav-links">
+
+                <a href="/dashboard">
+                    Dashboard
+                </a>
+
+                <a href="/logout">
+                    Logout
+                </a>
+
+            </div>
+
+        </nav>
 
 
-        {% with messages = get_flashed_messages() %}
-            {% for message in messages %}
-                 <p>{{ message }}</p>
-            {% endfor %}
-        {% endwith %}
+        <!-- Main Content -->
+        <main class="profile-content">
 
-        <h1>My Profile</h1>
+            <div class="profile-heading">
 
-        <h2>Edit Profile</h2>
-        <form method="POST" action="/profile">
+                <p>ACCOUNT</p>
 
-            <label>Username:</label>
-            <input type="text" name="username" value="{{ user['username'] }}">
+                <h1>My Profile</h1>
+                {% if user["profile_picture"] %}
+                <img
+                    src="{{ url_for('static', filename='uploads/' + user['profile_picture']) }}"
+                    alt="Profile Picture"
+                    class="profile-avatar"
+                >
+                {% else %}
+                <div class="profile-avatar profile-placeholder">
+                    {{ user["username"][0] }}
+                 </div>
+                {% endif %}
 
-            <br><br>
+                <span>
+                    Manage your account information and security.
+                </span>
 
-            <button type="submit">Save Changes</button>
-        </form>
-        
-
-        <h3>Change Password</h3>
-        <form method="POST" action="/change-password">
-
-            <label>New Password:</label>
-            <input type="password" name="password">
-
-            <label>Confirm password:</label>
-            <input type="password" name="confirm_password">
-
-            <br><br>
-
-            <button type="submit">Change Password</button>
-
-        </form>
+            </div>
 
 
-        <a href="/dashboard">Back to Dashboard</a>
+            <!-- Flash Messages -->
+            {% with messages = get_flashed_messages() %}
 
-        <br><br>
+                {% for message in messages %}
 
-        <a href="/logout">Logout</a>
+                    <p class="flash">
+                        {{ message }}
+                    </p>
+
+                {% endfor %}
+
+            {% endwith %}
 
 
-    </body>
+            <div class="profile-grid">
+
+
+                <!-- Personal Information -->
+                <section class="profile-card">
+
+                    <div class="card-title">
+
+                        <div>
+                            <h2>Personal Information</h2>
+
+                            <p>
+                                Update your profile information.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <form method="POST" action="/profile" enctype="multipart/form-data">
+
+                        <label>Username</label>
+
+                        <input
+                            type="text"
+                            name="username"
+                            value="{{ user['username'] }}"
+                            required
+                        >
+
+
+                        <label>Email</label>
+
+                        <input
+                            type="email"
+                            value="{{ user['email'] }}"
+                            disabled
+                        >
+
+                        <label for="profile_picture">Profile Picture</label>
+
+                        <input
+                            type="file"
+                            id="profile_picture"
+                            name="profile_picture"
+                            accept="image/png, image/jpeg, image/webp"
+                        >
+
+
+                        <button type="submit">
+                            Save Changes
+                        </button>
+
+                    </form>
+
+                </section>
+
+
+                <!-- Security -->
+                <section class="profile-card">
+
+                    <div class="card-title">
+
+                        <h2>Security</h2>
+
+                        <p>
+                            Keep your account secure.
+                        </p>
+
+                    </div>
+
+
+                    <form method="POST" action="/change-password">
+
+                        <label>New Password</label>
+
+                        <input
+                            type="password"
+                            name="password"
+                            placeholder="Enter new password"
+                            required
+                        >
+
+
+                        <label>Confirm Password</label>
+
+                        <input
+                            type="password"
+                            name="confirm_password"
+                            placeholder="Confirm your new password"
+                            required
+                        >
+
+
+                        <button type="submit">
+                            Change Password
+                        </button>
+
+                    </form>
+
+                </section>
+
+
+            </div>
+
+
+            <!-- Account Information -->
+            <section class="account-info">
+
+                <h2>Account</h2>
+
+                <div class="account-row">
+
+                    <span>Account email</span>
+
+                    <strong>
+                        {{ user['email'] }}
+                    </strong>
+
+                </div>
+
+            </section>
+
+
+            <a href="/dashboard" class="back-button">
+                ← Back to Dashboard
+            </a>
+
+        </main>
+
+    </div>
+
+</body>
+
 </html>
