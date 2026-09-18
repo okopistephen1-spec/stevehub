@@ -15,14 +15,21 @@
     </head>
     <body>
         <div class="login-container">
+            {% extends "base.html" %}
 
-    <h1>Login</h1>
+            {% block title %}
+            Home - SteveHub
+            {% endblock %}
 
-    {% with messages = get_flashed_messages() %}
-        {% for message in messages %}
+            {% block content %}
+
+            <h1>Login</h1>
+
+            {% with messages = get_flashed_messages() %}
+            {% for message in messages %}
             <p class="flash">{{ message }}</p>
-        {% endfor %}
-    {% endwith %}
+            {% endfor %}
+            {% endwith %}
 
     <form method="POST">
 
@@ -41,6 +48,7 @@
     </form>
 
     <a href="/register">Don't have an account? Create one</a>
+    {% endblock %}
 
 </div>
             

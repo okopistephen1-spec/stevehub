@@ -28,6 +28,13 @@
        <main class="hero">
 
     <div class="hero-content">
+        {% extends "base.html" %}
+
+        {% block title %}
+        Home - SteveHub
+        {% endblock %}
+
+        {% block content %}
 
         <p>Welcome to Stevehub</p>
 
@@ -46,6 +53,7 @@
             src="https://thumbs.dreamstime.com/b/business-professional-engaging-artificial-intelligence-concepts-modern-workplace-technology-innovation-elements-458243882.jpg"
             alt="SteveHub technology"
         >
+        {% endblock %}
 
     </div>
 
