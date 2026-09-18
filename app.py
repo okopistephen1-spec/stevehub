@@ -1,17 +1,29 @@
 import os
 import uuid
+from dotenv import load_dotenv
 
-GOOGLE_CLIENT_ID = os.environ.get("GOOGLE_CLIENT_ID")
-GOOGLE_CLIENT_SECRET = os.environ.get("GOOGLE_CLIENT_SECRET")
+from flask import Flask, render_template, request, session, redirect, flash, url_for
 
 from werkzeug.utils import secure_filename
-
 from werkzeug.security import generate_password_hash, check_password_hash
+
 import sqlite3
-from flask import Flask, render_template, request, session, redirect, flash, url_for
+
 from authlib.integrations.flask_client import OAuth
 
+
+# Load environment variables
+load_dotenv()
+
+GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
+GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET")
+SECRET_KEY = os.getenv("SECRET_KEY")
+
+
 app = Flask(__name__)
+
+app.config["SECRET_KEY"] = SECRET_KEY
+
 
 UPLOAD_FOLDER = os.path.join(app.root_path, "static", "uploads")
 
@@ -19,8 +31,6 @@ ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "webp"}
 
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
-
-app.secret_key = os.environ.get("SECRET_KEY")
 
 oauth = OAuth(app)
 
@@ -300,4 +310,4 @@ def logout():
     return redirect("/login")
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8080)
+    app.run(debug=True)
